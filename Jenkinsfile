@@ -6,29 +6,26 @@ pipeline {
     }
 
     environment {
-        // Set your Docker image name and Docker Hub repo
         DOCKER_IMAGE = 'yourdockerhubusername/maven-webapp'
     }
 
     stages {
+
+        // a. Checkout stage
         stage('Checkout') {
             steps {
                 git credentialsId: 'GitHub-PAT', branch: 'main', url: 'https://github.com/AShaji23/COMP367_WebApp.git'
             }
         }
 
+        // b. Build Maven project stage
         stage('Build Maven Project') {
             steps {
                 sh 'mvn clean package'
             }
         }
 
-        stage('Test') {
-            steps {
-                sh 'mvn test'
-            }
-        }
-
+        // d. Docker login stage
         stage('Docker Login') {
             steps {
                 withCredentials([usernamePassword(credentialsId: 'docker-hub-credentials', usernameVariable: 'DOCKER_USER', passwordVariable: 'DOCKER_PASS')]) {
@@ -38,21 +35,17 @@ pipeline {
             }
         }
 
+        // e. Docker build stage
         stage('Docker Build') {
             steps {
                 sh 'docker build -t $DOCKER_IMAGE .'
             }
         }
 
+        // f. Docker push stage
         stage('Docker Push') {
             steps {
                 sh 'docker push $DOCKER_IMAGE'
-            }
-        }
-
-        stage('Deploy (Optional)') {
-            steps {
-                echo "Deploy step is optional here since Docker image is pushed."
             }
         }
     }

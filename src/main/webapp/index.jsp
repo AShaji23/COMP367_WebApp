@@ -11,7 +11,7 @@
             int hour = Calendar.getInstance().get(Calendar.HOUR_OF_DAY);
             String greeting = (hour < 12) ? "Good morning" : "Good afternoon";
         %>
-        <%= greeting %>, Ashwin! Welcome to COMP367
+        <%= greeting %>, Ashwin! Welcome to (COMP367) Devops Implementation course.
     </h1>
 </body>
 </html>

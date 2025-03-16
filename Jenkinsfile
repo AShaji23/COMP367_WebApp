@@ -6,7 +6,7 @@ pipeline {
     }
 
     environment {
-        DOCKER_IMAGE = 'yourdockerhubusername/maven-webapp'
+        DOCKER_IMAGE = 'ash13win/maven-webapp'
     }
 
     stages {
